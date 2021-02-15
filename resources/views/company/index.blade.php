@@ -20,7 +20,7 @@
                 <p><b>Slogan:</b> {{ $company->slogan }}</p> 
                 <p><b>Address:</b> {{ $company->address }}</p> 
                 <p><b>Contact:</b> {{ $company->phone }}</p> 
-                <p><b>Website:</b> {{ $company->website }}</p> 
+                <p><b>Website:</b> {{ $company->website }}</p>
             </div>
             <table class="table">
                 <thead>
