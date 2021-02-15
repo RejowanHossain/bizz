@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3">
-            @if (empty(Auth::user()->profile->avatar)))
+            @if (empty(Auth::user()->profile->avatar))
                 <img src="{{ asset('avatar/avatar.png') }}" alt="avatar" width="100%" height="250px">
             @else
                 <img src="{{ asset('uploads/avatar') }}/{{ Auth::user()->profile->avatar }}" alt="avatar" width="100%" height="250px">

@@ -109,6 +109,7 @@
                     <p><b>Website:</b> {{ Auth::user()->company->website }}</p>
                     <p><b>Phone:</b> {{ Auth::user()->company->phone }}</p>
                     <p><b>Slogan:</b> {{ Auth::user()->company->slogan }}</p>
+                    <p><b>Company Profile:</b> <a class="btn btn-info btn-sm" href="company/{{ Auth::user()->company->slug }}">View</a></p> 
                     <p><b>Description:</b> {{ Auth::user()->company->description }}</p>
                     <p><b>Member Since:</b> {{date('F d, Y' , strtotime(Auth::user()->created_at)) }}</p>
                     @if (!empty(Auth::user()->profile->cover_letter))

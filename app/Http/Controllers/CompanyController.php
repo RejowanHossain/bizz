@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Company;
-use App\Jobs;
+use App\Job;
 use Illuminate\Http\Request;
 
 class CompanyController extends Controller
@@ -32,6 +32,7 @@ class CompanyController extends Controller
             'description'=>request('description'),
             'phone'=>request('phone'),
             'address'=>request('address'),
+
         ]);
         return redirect()->back()->with('message', 'Your company profile has been updated successfully');
     }
@@ -39,14 +40,19 @@ class CompanyController extends Controller
     public function coverphoto(Request $request){
         $this->validate($request, [
             'cover_photo' => 'required|mimes:jpg,jpeg,JPG,JPEG,png,PNG|max:1024',
-           
         ]);
         $user_id = auth()->user()->id;
-        $cover = $request->file('cover_photo')->store('public/files');
-        Company::where('user_id', $user_id)->update([
-            'cover_photo'=>$cover,
-        ]);
-        return redirect()->back()->with('message', 'Company cover photo has been updated successfully');
+
+        if($request->hasFile('cover_photo')){
+            $file = $request->file('cover_photo');
+            $text = $file->getClientOriginalExtension();
+            $filename = time().'.'.$text;
+            $file->move('uploads/avatar', $filename);
+            Company::where('user_id', $user_id)->update([
+            'cover_photo'=>$filename,
+            ]);
+            return redirect()->back()->with('message', 'Cover Photo has been updated successfully');
+        }
     }
 
      public function logo(Request $request){

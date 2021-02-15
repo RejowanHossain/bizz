@@ -5,6 +5,11 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
+                @if (Session::has('message'))
+                    <div class="alert alert-success">
+                        {{ Session::get('message') }}
+                    </div>
+                @endif
                 <div class="card-header">{{ $job->title }}</div>
                 <div class="card-body">
                    <h3>Description</h3>
@@ -26,11 +31,15 @@
                    <p>Address: {{ $job->address }}</p>
                    <p>Position: {{  $job->position }}</p>
                    <p>Esrimated: {{  $job->last_date }}</p>
+                   @if (!$job->checkApplication())
+                       @if (Auth::user()->user_type == 'seeker')
+                        <form action="{{ route('jobs.apply', [$job->id]) }}" method="POST">
+                            @csrf
+                            <button class="btn btn-primary">Apply</button>
+                        </form>
+                    @endif
+                   @endif
                 </div>
-                @if (Auth::check())
-                    <button class="btn btn-primary">Apply</button>
-                @endif
-                
             </div>
         </div>
     </div>

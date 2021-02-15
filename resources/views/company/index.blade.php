@@ -5,7 +5,11 @@
     <div class="row">
         <div class="col-md-12">
             <div class="company-profile">
-                <img src="{{ asset('cover/cover.jpg') }}" alt="banner" width="100%" height="350px">
+               @if (empty(Auth::user()->company->cover_photo))
+                <img src="{{ asset('avatar/avatar.png') }}" alt="avatar" width="100%" height="250px">
+            @else
+                <img src="{{ asset('uploads/avatar') }}/{{ Auth::user()->company->cover_photo }}" alt="avatar" width="100%" height="450px">
+            @endif
             </div>
         </div>
     </div>
@@ -14,7 +18,11 @@
     <div class="row">
         <div class="col-md-12">
             <div class="company-desc mt-3">
-                <img src="{{ asset('avatar/avatar.png') }}" alt="avatar" width="80px">
+                @if (empty(Auth::user()->company->logo))
+                    <img src="{{ asset('avatar/avatar.png') }}" alt="avatar" width="100%" height="250px">
+                @else
+                    <img src="{{ asset('uploads/avatar') }}/{{ Auth::user()->company->logo }}" alt="avatar" height="250px">
+                @endif
                 <h1>Company Name: {{ $company->cname }}</h1>
                 <p><b class="f-20">Company Details:</b> {{ $company->description }}</p>
                 <p><b>Slogan:</b> {{ $company->slogan }}</p> 
