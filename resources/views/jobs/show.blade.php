@@ -30,14 +30,13 @@
                     </h3>
                    <p>Address: {{ $job->address }}</p>
                    <p>Position: {{  $job->position }}</p>
-                   <p>Esrimated: {{  $job->last_date }}</p>
+                   <p>Estimated: {{  $job->last_date }}</p>
                    @if (!$job->checkApplication())
                        @if (Auth::user()->user_type == 'seeker')
-                        <form action="{{ route('jobs.apply', [$job->id]) }}" method="POST">
-                            @csrf
-                            <button class="btn btn-primary">Apply</button>
-                        </form>
+                        <apply-component :jobid={{$job->id}}></apply-component>
                     @endif
+                    <br>
+                        <favourites-component :jobid={{$job->id}} :favourited={{ $job->checkSaved() ? 'true': 'false'}}></favourites-component>
                    @endif
                 </div>
             </div>

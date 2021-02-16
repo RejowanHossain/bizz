@@ -82,6 +82,9 @@
                                         <a class="dropdown-item" href="{{ route('user.create') }}">
                                             {{ __('Profile') }}
                                         </a>
+                                         <a class="dropdown-item" href="{{ route('home') }}">
+                                            {{ __('Saved Jobs') }}
+                                        </a>
                                     @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();

@@ -4,19 +4,24 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+            @if (Auth::user()->user_type == 'seeker')
+                @foreach ($jobs as $job )
+                    <div class="card">
+                        <div class="card-header">{{ $job->title }}</div>
+                        <div class="card-body">
+                            {{ $job->description }}
                         </div>
-                    @endif
-
-                    You are logged in!
-                </div>
-            </div>
+                        <div class="card-footer">
+                            <a href="{{ route('jobs.show', [$job->id, $job->slug]) }}" class="btn btn-primary">Read More</a>
+                            <span class="float-right">
+                                {{ $job->last_date }}
+                            </span>
+                        </div>
+                    </div>
+                @endforeach
+                
+            @endif
+            
         </div>
     </div>
 </div>

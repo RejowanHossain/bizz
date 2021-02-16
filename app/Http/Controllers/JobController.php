@@ -10,8 +10,9 @@ use App\Http\Requests\JobPostRequest;
 class JobController extends Controller
 {
     public function index(){
-        $jobs = Job::all()->take(10);  
-        return view('welcome', compact('jobs'));
+        $jobs = Job::latest()->limit(10)->get(); 
+        $companies = Company::latest()->limit(12)->get();   
+        return view('welcome', compact('jobs', 'companies'));
     }
 
     public function show($id, Job $job){
@@ -54,6 +55,25 @@ class JobController extends Controller
     public function applicants(){
         $applicants = Job::has('users')->where('user_id',auth()->user()->id)->get();
        return view('jobs.applicants', compact('applicants'));
+    }
+
+    public function alljobs(Request $request){
+        $keyword = request('title');
+        $type = request('type');
+        $category = request('category');
+        $address = request('address');
+    
+        if($keyword || $type ||$category || $address){
+            $jobs = Job::where('title', 'LIKE', '%'.$keyword.'%')
+            ->orWhere('type', $type)
+            ->orWhere('category_id', $category)
+            ->orWhere('address', $address)
+            ->paginate(10);
+            return view('jobs.alljobs', compact('jobs'));
+        }else{
+            $jobs =Job::paginate(10);
+            return view('jobs.alljobs', compact('jobs'));
+        }
     }
 
 }
